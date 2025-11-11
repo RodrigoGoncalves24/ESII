@@ -1,0 +1,35 @@
+server:
+  port: 8765
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: conversion
+          uri: lb://currency-conversion-service
+          predicates:
+            - Path=/currency-conversion/**
+        - id: exchange
+          uri: lb://currency-exchange-service
+          predicates:
+            - Path=/currency-exchange/**
+    discovery:
+      locator:
+        enabled: true
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://keycloak:8765/realms/microservices
+        registration:
+          keycloak:
+            client-id: api-gateway
+            client-secret: RUyOkgwR2ql5KcSd4tQ6d8Et97P3freX
+            scope: openid,profile,email

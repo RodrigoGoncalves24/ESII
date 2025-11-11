@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "spring.cloud.openfeign.oauth2.enable",
+  "type": "java.lang.String",
+  "description": "A description for 'spring.cloud.openfeign.oauth2.enable'"
+}]}

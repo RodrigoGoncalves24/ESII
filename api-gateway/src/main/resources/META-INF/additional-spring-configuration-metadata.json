@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "spring.cloud.discovery.locator.enabled",
+  "type": "java.lang.String",
+  "description": "A description for 'spring.cloud.discovery.locator.enabled'"
+}]}
