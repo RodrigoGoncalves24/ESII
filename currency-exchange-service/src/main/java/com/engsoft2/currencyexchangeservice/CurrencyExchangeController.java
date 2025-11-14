@@ -38,7 +38,7 @@ public class CurrencyExchangeController {
     }
 
     @PostMapping("/currency-exchange/rates")
-    @PreAuthorize("hasRole('ADMIN')") //Apenas admin pode criar uma nova taxa
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CurrencyExchange> createExchangeRate(@RequestBody CurrencyExchange rateData) {
         CurrencyExchange existingRate = repository.findByFromAndTo(rateData.getFrom(), rateData.getTo());
 
@@ -51,7 +51,7 @@ public class CurrencyExchangeController {
     }
 
     @PutMapping("/currency-exchange/rates/from/{from}/to/{to}")
-    @PreAuthorize("hasRole('ADMIN')")// Controle para apenas admin pode alterar
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CurrencyExchange> updateExchangeRate(
             @PathVariable String from,
             @PathVariable String to,
