@@ -10,29 +10,25 @@ spring:
       discovery:
         locator:
           enabled: false 
+          lower-case-service-id: true
           
       default-filters:
         - TokenRelay
         
       routes:
-        - id: currency-conversion-route
+        - id: currency-conversion
           uri: lb://currency-conversion
           predicates:
             - Path=/conversion/**
           filters: 
-            - RewritePath=/conversion/(?<segment>.*), /currency-conversion-feign/$\{segment}
+            - RewritePath=/conversion/(?<segment>.*), "/currency-conversion-feign/$\{segment}"
             
-        - id: currency-exchange-route
+        - id: currency-exchange
           uri: lb://currency-exchange
           predicates:
             - Path=/exchange/**
           filters: 
-            - RewritePath=/exchange/(?<segment>.*), /currency-exchange/$\{segment}
-
-      discovery:
-        locator:
-          enabled: false
-          lower-case-service-id: true
+            - RewritePath=/exchange/(?<segment>.*), "/currency-exchange/$\{segment}"
 
   security:
     oauth2:
