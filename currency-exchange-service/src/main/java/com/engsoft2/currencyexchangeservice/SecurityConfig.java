@@ -15,7 +15,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(auth -> 
         auth.requestMatchers("/admin/**").hasRole("ADMIN")
-        .requestMatchers("/currency-exchange-service/**").hasAnyRole("USER", "ADMIN")
+        .requestMatchers("/currency-exchange/**").hasAnyRole("USER", "ADMIN")
         .anyRequest().authenticated()
         )
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer :: jwt);

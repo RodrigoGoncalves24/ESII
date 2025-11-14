@@ -3,7 +3,7 @@ server:
 
 spring:
     application:
-        name: history-service
+        name: history
     
     datasource:
         url: jdbc:h2:mem:historydb
@@ -19,7 +19,7 @@ spring:
      oauth2:
         resourceserver:
             jwt:
-               issuer-uri: http://localhost:8081/realms/microservices
+               issuer-uri: http://localhost:8081/realms/microservice
 
 eureka:
   client:

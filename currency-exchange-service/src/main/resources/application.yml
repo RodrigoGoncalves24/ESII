@@ -1,21 +1,23 @@
 server:
-    port: 8000
+  port: 8000
 
 spring:
-    application:
-        name: currency-exchange-service
-    
-    security:
-     oauth2:
-        resourceserver:
-            jwt:
-                issuer-uri: http://keycloak:8000/relms/microsservicos
-    
-    cloud:
-        openfeign:
-              oauth2:
-                enable: true
+  application:
+    name: currency-exchange
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/microservice
+
+  cloud:
+    discovery:
+      enabled: true
+    config:
+      enabled: false
+
 eureka:
-    client:
-        service-url:
-            defaultZone: http://keycloak:8000/eureka
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

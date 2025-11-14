@@ -15,7 +15,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(auth -> 
         auth.requestMatchers("/admin/**").hasRole("ADMIN")
-        .requestMatchers("/history-service/**").hasAnyRole("USER", "ADMIN")
+        .requestMatchers("/history/**").hasAnyRole("USER", "ADMIN")
         .anyRequest().authenticated()
         )
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer :: jwt);

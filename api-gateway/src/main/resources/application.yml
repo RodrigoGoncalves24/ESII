@@ -7,29 +7,68 @@ spring:
 
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: false 
+          
       default-filters:
         - TokenRelay
+        
       routes:
-        - id: conversion
-          uri: lb://currency-conversion-service
+        - id: currency-conversion-route
+          uri: lb://currency-conversion
           predicates:
-            - Path=/currency-conversion/**
-        - id: exchange
-          uri: lb://currency-exchange-service
+            - Path=/conversion/**
+          filters: 
+            - RewritePath=/conversion/(?<segment>.*), /currency-conversion-feign/$\{segment}
+            
+        - id: currency-exchange-route
+          uri: lb://currency-exchange
           predicates:
-            - Path=/currency-exchange/**
-    discovery:
-      locator:
-        enabled: true
+            - Path=/exchange/**
+          filters: 
+            - RewritePath=/exchange/(?<segment>.*), /currency-exchange/$\{segment}
+
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
 
   security:
     oauth2:
       client:
         provider:
           keycloak:
-            issuer-uri: http://keycloak:8765/realms/microservices
+            issuer-uri: http://localhost:8081/realms/microservice
         registration:
           keycloak:
             client-id: api-gateway
             client-secret: RUyOkgwR2ql5KcSd4tQ6d8Et97P3freX
             scope: openid,profile,email
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always  
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+        sliding-window-type: count-based
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
