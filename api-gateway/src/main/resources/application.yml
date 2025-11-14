@@ -9,7 +9,7 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: false 
+          enabled: true 
           lower-case-service-id: true
           
       default-filters:
@@ -21,26 +21,26 @@ spring:
           predicates:
             - Path=/conversion/**
           filters: 
-            - RewritePath=/conversion/(?<segment>.*), "/currency-conversion-feign/$\{segment}"
+            - RewritePath=/conversion/(?<segment>.*), '/currency-conversion-feign/$\{segment}'
             
         - id: currency-exchange
           uri: lb://currency-exchange
           predicates:
             - Path=/exchange/**
           filters: 
-            - RewritePath=/exchange/(?<segment>.*), "/currency-exchange/$\{segment}"
+            - RewritePath=/exchange/(?<segment>.*), '/currency-exchange/$\{segment}'
 
   security:
     oauth2:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8081/realms/microservice
+            issuer-uri: http://localhost:8081/realms/microservice 
         registration:
           keycloak:
             client-id: api-gateway
-            client-secret: RUyOkgwR2ql5KcSd4tQ6d8Et97P3freX
-            scope: openid,profile,email
+            client-secret: RUyOkgwR2ql5KcSd4tQ6d8Et97P3freX 
+            scope: openid,profile,email 
 
 eureka:
   client:
